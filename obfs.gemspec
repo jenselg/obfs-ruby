@@ -7,7 +7,6 @@ Gem::Specification.new do |s|
     s.authors     = ["Jensel Gatchalian"]
     s.email       = 'jensel.gatchalian@gmail.com'
     s.files       = ["lib/obfs.rb"]
-    s.homepage    =
-      'https://rubygems.org/gems/obfs'
-    s.license       = 'MIT'
+    s.homepage    = 'https://rubygems.org/gems/obfs'
+    s.license     = 'MIT'
 end
