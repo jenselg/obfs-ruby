@@ -22,7 +22,7 @@ class OBFS
                     @path
                 when '_keys'
                     # array of directory contents
-                    Dir.entries @path rescue []
+                    Dir.entries(@path).reject { |k| k == '.' || k == '..' } rescue nil
                 end
 
             # setter
