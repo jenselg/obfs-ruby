@@ -19,10 +19,13 @@ class OBFS
 
                 case method_name
                 when '_path'
+                    # string path
                     @path
                 when '_keys'
                     # array of directory contents
                     Dir.entries(@path).reject { |k| k == '.' || k == '..' } rescue nil
+                when '_open'
+                when '_search'
                 end
 
             # setter
