@@ -15,13 +15,14 @@ class OBFS
             dataB = args[1]
 
             # special obfs attributes
-            if method_name.start_with? "obfs_"
+            if method_name.start_with? "_"
 
                 case method_name
-                when 'obfs_path'
+                when '_path'
                     @path
-                when 'obfs_keys'
+                when '_keys'
                     # array of directory contents
+                    Dir.entries @path rescue []
                 end
 
             # setter
@@ -34,16 +35,17 @@ class OBFS
                 if method_name == "[]"
                     method_name = dataA
                     data = dataB
+                else # make sure we load the proper method_name and data
+                    method_name = m.to_s.gsub('=','')
+                    data = args[0]
                 end
-
-                # clear out current files
-                FileUtils.rm_rf @path
-                FileUtils.mkpath @path
                     
                 # write data
                 if data == nil
                     FileUtils.rm_rf File.join @path, method_name
                 else
+                    FileUtils.rm_rf @path, method_name if File.exist? File.join @path, method_name
+                    FileUtils.mkpath @path if !File.directory? @path
                     write(@path, method_name, data)
                 end
             
