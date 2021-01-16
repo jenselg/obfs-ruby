@@ -10,7 +10,7 @@
 - Start a new store: `datastore = OBFS.new`
 - Reading data from store: `datastore.somefile` or `datastore["somefile"]` 
 - Writing data to store: `datastore.somefile = "some value"` or `datastore["somefile"] = "some value"`
-- Deleting data from store: `datastore.somefile = nil`
+- Deleting data from store: `datastore.somefile = nil` or `datastore["somefile"] = nil` 
 - Valid values: String, Array, Hash, Integer, Float, Boolean
 
 ## Usage / Notes
@@ -34,7 +34,7 @@
 - Returns the current directory's content filenames in an array
 
 `_find term, records, tolerance`
-- Basic usage: `datastore.some.data._find("some term")`
+- Basic usage: `datastore.some.data._find "some term"`
 - Searches the current directory's content filenames and returns the results in an array
 - `term` - term to search for - should be a string
 - `records` - number of records to return - set to `10` by default 
