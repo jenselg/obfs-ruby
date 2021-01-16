@@ -99,7 +99,7 @@ class OBFS
 
         def read(path, filename)
             curr_path = File.join path, filename
-            JSON.parse(File.open(curr_path).read) rescue eval(File.open(curr_path).read)
+            JSON.parse(File.open(curr_path).read) rescue File.open(curr_path).read
         end
 
 end
