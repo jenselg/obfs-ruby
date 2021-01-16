@@ -40,7 +40,7 @@
 - Searches the current directory's content filenames and returns the results in an array
 - `term` - term to search for - should be a string
 - `records` - number of records to return - set to `1000` by default 
-- `tolerance` - Levenshtein distance between the term and possible results - set to `10` by default
+- `tolerance` - Levenshtein distance between the term and possible results - set to `50` by default
 
 `_exist term`
 - Basic usage: `datastore.some.data._exist "some term"`
