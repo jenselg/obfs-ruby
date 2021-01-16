@@ -79,7 +79,7 @@ class OBFS
         end
 
         # searches directory contents (1 level) and returns array sorted by relevance
-        def _find(term = '', records = 10, tolerance = 10)
+        def _find(term = '', records = 1000, tolerance = 10)
             output = []
             search_space = Dir.entries(@path).reject { |k| k == '.' || k == '..' } rescue []
             search_space.each do |search_space_term|
