@@ -46,6 +46,12 @@
 - Searches the current directory's content filenames and returns `true` if the term exists, else it returns `false`
 
 
+## Links
+- [RubyGems](https://rubygems.org/gems/obfs) 
+- [GitHub](https://github.com/jenselg/obfs-ruby)
+- [JavaScript / Node.js Version](https://github.com/jenselg/obfs)
+
+
 ## License
 
 #### MIT License
