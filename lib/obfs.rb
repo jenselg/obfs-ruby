@@ -1,11 +1,14 @@
 require 'fileutils'
 require 'json'
+require 'text'
 
 class OBFS
 
         def initialize(attributes = {}) # hash argument
             @path = (attributes.keys.include? :path) ? attributes[:path] : (File.join(Dir.home, '.obfs'))
         end
+
+        # regular methods
 
         def method_missing(m, *args, &block)
 
@@ -14,22 +17,8 @@ class OBFS
             dataA = args[0]
             dataB = args[1]
 
-            # special obfs attributes
-            if method_name.start_with? "_"
-
-                case method_name
-                when '_path'
-                    # string path
-                    @path
-                when '_keys'
-                    # array of directory contents
-                    Dir.entries(@path).reject { |k| k == '.' || k == '..' } rescue nil
-                when '_open'
-                when '_search'
-                end
-
-            # setter
-            elsif  method_name.end_with?('=')
+            # setter call
+            if  method_name.end_with?('=')
 
                 # clean up name
                 method_name = method_name.gsub('=','')
@@ -52,6 +41,7 @@ class OBFS
                     write(@path, method_name, data)
                 end
             
+            # bracket notation
             elsif method_name == "[]"
 
                 method_name = dataA.to_s.gsub(/\["/,'').gsub(/"\]/,'')
@@ -61,6 +51,7 @@ class OBFS
                     OBFS.new({ path: File.join(@path, method_name.to_s) })
                 end
 
+            # recurse or read
             else
 
                 if (!File.directory? File.join(@path, method_name)) && (File.exist? File.join(@path, method_name))
@@ -73,7 +64,33 @@ class OBFS
             
         end
 
+        # special methods
+
+        # returns current working path for obfs
+        def _path
+            @path
+        end
+
+        # returns directory contents in an array
+        def _index
+            Dir.entries(@path).reject { |k| k == '.' || k == '..' } rescue nil
+        end
+
+        # searches directory contents (1 level) and returns array sorted by relevance
+        def _find(term = '', records_count = 10, tolerance = 10)
+            output = []
+            search_space = Dir.entries(@path).reject { |k| k == '.' || k == '..' } rescue []
+            search_space.each do |search_space_term|
+                if Text::Levenshtein.distance(search_space_term, term) <= tolerance && Text::WhiteSimilarity.similarity(search_space_term, term) > 0.0
+                    output << search_space_term
+                end
+            end
+            output.first(records_count)
+        end 
+
         private
+
+        # filesystem R/W
 
         def write(path, filename, data)
             curr_path = File.join path, filename
@@ -82,7 +99,7 @@ class OBFS
 
         def read(path, filename)
             curr_path = File.join path, filename
-            JSON.parse(File.open(curr_path).read) rescue File.open(curr_path).read
+            JSON.parse(File.open(curr_path).read) rescue eval(File.open(curr_path).read)
         end
 
 end

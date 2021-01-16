@@ -1,0 +1,18 @@
+GIT
+  remote: git@github.com:jenselg/text.git
+  revision: 43e6e315d6c314ce452e5409dd37a716b72b46be
+  specs:
+    text (1.3.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  text!
+
+BUNDLED WITH
+   2.2.3
