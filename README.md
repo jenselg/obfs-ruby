@@ -13,6 +13,7 @@
 - Deleting data from store: `datastore.somefile = nil` or `datastore["somefile"] = nil` 
 - Valid values: String, Array, Hash, Integer, Float, Boolean
 
+
 ## Usage / Notes
 
 - A Hash {} Argument can be passed to `OBFS.new`
