@@ -65,7 +65,7 @@ class OBFS
 
             # recurse or read
             else
-                
+
                 # prevent traversing out of dir
                 raise "traversal through . and .. not allowed" if ['.', '..'].include? method_name
 
@@ -105,7 +105,7 @@ class OBFS
 
         # searches directory contents (1 level) and returns boolean if term exist
         def _exist(term = '')
-            exist_space = Dir.entries(@path).reject { |k| k != term.to_s }
+            exist_space = Dir.entries(@path).reject { |k| k != term.to_s || k == '.' || k == '..' }
             if exist_space.length > 0
                 true
             else
