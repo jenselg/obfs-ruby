@@ -19,6 +19,9 @@ class OBFS
             dataA = args[0]
             dataB = args[1]
 
+            # prevent traversing out of dir
+            raise "traversal through . and .. not allowed" if ['.', '..'].include? method_name
+
             # setter call
             if  method_name.end_with?('=')
 
@@ -33,6 +36,9 @@ class OBFS
                     method_name = m.to_s.gsub('=','')
                     data = args[0]
                 end
+
+                # prevent traversing out of dir
+                raise "traversal through . and .. not allowed" if ['.', '..'].include? method_name
                     
                 # write data
                 if data == nil
@@ -47,6 +53,10 @@ class OBFS
             elsif method_name == "[]"
 
                 method_name = dataA.to_s.gsub(/\["/,'').gsub(/"\]/,'')
+
+                # prevent traversing out of dir
+                raise "traversal through . and .. not allowed" if ['.', '..'].include? method_name
+                    
                 if (!File.directory? File.join(@path, method_name)) && (File.exist? File.join(@path, method_name))
                     read(@path, method_name)
                 else
@@ -55,6 +65,9 @@ class OBFS
 
             # recurse or read
             else
+                
+                # prevent traversing out of dir
+                raise "traversal through . and .. not allowed" if ['.', '..'].include? method_name
 
                 if (!File.directory? File.join(@path, method_name)) && (File.exist? File.join(@path, method_name))
                     read(@path, method_name)
