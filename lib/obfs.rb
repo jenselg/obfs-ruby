@@ -36,9 +36,9 @@ class OBFS
                     
                 # write data
                 if data == nil
-                    FileUtils.rm_rf File.join @path, method_name
+                    FileUtils.rm_rf (File.join @path, method_name)
                 else
-                    FileUtils.rm_rf @path, method_name if File.exist? File.join @path, method_name
+                    FileUtils.rm_rf (File.join @path, method_name) if File.exist? (File.join @path, method_name)
                     FileUtils.mkpath @path if !File.directory? @path
                     write(@path, method_name, data)
                 end
@@ -88,15 +88,27 @@ class OBFS
                 end
             end
             output.first(records)
-        end 
+        end
+
+        # searches directory contents (1 level) and returns boolean if term exist
+        def _exist(term = '')
+            exist_space = Dir.entries(@path).reject { |k| k != term.to_s }
+            if exist_space.length > 0
+                true
+            else
+                false
+            end
+        end
 
         private
 
         # filesystem R/W
 
         def write(path, filename, data)
-            curr_path = File.join path, filename
-            File.write(curr_path, JSON.unparse(data))
+            Thread.new {
+                curr_path = File.join path, filename
+                File.write(curr_path, JSON.unparse(data))
+            }
         end
 
         def read(path, filename)

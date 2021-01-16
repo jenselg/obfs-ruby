@@ -41,6 +41,10 @@
 - `records` - number of records to return - set to `1000` by default 
 - `tolerance` - Levenshtein distance between the term and possible results - set to `10` by default
 
+`_exist term`
+- Basic usage: `datastore.some.data._exist "some term"`
+- Searches the current directory's content filenames and returns `true` if the term exists, else it returns `false`
+
 
 ## License
 
