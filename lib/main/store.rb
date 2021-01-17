@@ -1,4 +1,4 @@
-Module OBFS
+module OBFS
 
     class Store
 
