@@ -5,9 +5,7 @@
 # encoding: utf-8
 # Original author: Wilker Lúcio <wilkerlucio@gmail.com>
 
-require "set"
-
-module Text
+module OBFS
 
   # Ruby implementation of the string similarity described by Simon White
   # at: http://www.catalysoft.com/articles/StrikeAMatch.html

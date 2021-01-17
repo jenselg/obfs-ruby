@@ -1,10 +1,6 @@
-# core code
 require 'fileutils'
 require 'json'
-
-# third-party code
-require 'text/levenshtein'
-require 'text/white_similarity'
-
-# main code
+require 'set'
 require 'main/store'
+require 'main/levenshtein'
+require 'main/white_similarity'

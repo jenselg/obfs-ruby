@@ -92,7 +92,7 @@ module OBFS
                 output = []
                 search_space = Dir.entries(@path).reject { |k| k == '.' || k == '..' } rescue []
                 search_space.each do |search_space_term|
-                    if Text::Levenshtein.distance(search_space_term, term) <= tolerance && Text::WhiteSimilarity.similarity(search_space_term, term) > 0.0
+                    if OBFS::Levenshtein.distance(search_space_term, term) <= tolerance && OBFS::WhiteSimilarity.similarity(search_space_term, term) > 0.0
                         output << search_space_term
                     end
                 end

@@ -7,7 +7,7 @@
 
 - Gemfile: `gem "obfs"`
 - Require in your project: `require "obfs"`
-- Start a new store: `datastore = OBFS.new`
+- Start a new store: `datastore = OBFS::Store.new`
 - Reading data from store: `datastore.somefile` or `datastore["somefile"]` 
 - Writing data to store: `datastore.somefile = "some value"` or `datastore["somefile"] = "some value"`
 - Deleting data from store: `datastore.somefile = nil` or `datastore["somefile"] = nil` 
@@ -16,9 +16,9 @@
 
 ## Usage / Notes
 
-- A Hash {} Argument can be passed to `OBFS.new`
+- A Hash {} Argument can be passed to `OBFS::Store.new`
 - By default, the `path` is set to an `.obfs` folder inside your home folder
-- A custom `path` can be set by providing an absolute path to the hash argument in `OBFS.new`, i.e. `datastore = OBFS.new { path: "/some/other/folder" }`
+- A custom `path` can be set by providing an absolute path to the hash argument in `OBFS::Store.new`, i.e. `datastore = OBFS::Store.new { path: "/some/other/folder" }`
 - Paths are recursively created, i.e. `datastore.some.long.path.to.create = "some string"` will recursively create the folders `datastore/some/long/path/to`, and create a file called `create` containing the string value
 - You can also do: `datastore["some"]["long"]["path"]["to"]["create"] = "some string"`
 - You can mix and match between dot and bracket notation: `datastore.some["long"].path["to"].create`
@@ -52,6 +52,9 @@
 - [GitHub](https://github.com/jenselg/obfs-ruby)
 - [JavaScript / Node.js Version](https://github.com/jenselg/obfs)
 
+
+## Credits
+- [Text](https://github.com/threedaymonk/text) - Ruby gem with a collection of text algorithms
 
 ## License
 

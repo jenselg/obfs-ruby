@@ -14,7 +14,7 @@
 # Author: Paul Battley (pbattley@gmail.com)
 #
 
-module Text # :nodoc:
+module OBFS # :nodoc:
     module Levenshtein
     
       # Calculate the Levenshtein distance between two strings +str1+ and +str2+.
