@@ -118,10 +118,8 @@ module OBFS
             # filesystem R/W
 
             def write(path, filename, data)
-                Thread.new {
-                    curr_path = File.join path, filename
-                    File.write(curr_path, JSON.unparse(data))
-                }
+                curr_path = File.join path, filename
+                File.write(curr_path, JSON.unparse(data))
             end
 
             def read(path, filename)
