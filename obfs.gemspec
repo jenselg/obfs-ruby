@@ -9,5 +9,5 @@ Gem::Specification.new do |s|
     s.files       = ["lib/obfs.rb"]
     s.homepage    = 'https://github.com/jenselg/obfs-ruby'
     s.license     = 'MIT'
-    s.add_dependency = 'text'
+    s.add_dependency('text')
 end
