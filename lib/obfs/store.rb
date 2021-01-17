@@ -102,11 +102,15 @@ module OBFS
             # searches directory contents (1 level) and returns boolean if term exist
             def _exist(term = '')
                 exist_space = Dir.entries(@path).reject { |k| k != term.to_s || k == '.' || k == '..' } rescue nil
-                if exist_space.length > 0 && !exist_space.nil?
-                    true
+                if !exist_space.nil?
+                    if exist_space.length > 0
+                        true
+                    else
+                        false
+                    end
                 else
                     false
-                end
+                end 
             end
 
             private
