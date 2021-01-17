@@ -11,7 +11,7 @@ File-based, object-oriented data store for Ruby.
 - Start a new store: `datastore = OBFS::Store.new`
 - Reading data from store: `datastore.somefile` or `datastore["somefile"]` 
 - Writing data to store: `datastore.somefile = "some value"` or `datastore["somefile"] = "some value"`
-- Deleting data from store: `datastore.somefile = nil` or `datastore["somefile"] = nil` 
+- Deleting data from store: `datastore.somefile = nil` or `datastore["somefile"] = nil` or set to another value
 - Valid values: string, array, hash, integer, float, boolean
 
 
