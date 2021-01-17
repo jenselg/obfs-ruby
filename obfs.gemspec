@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
     s.description       = "File-based, object-oriented data store for Ruby"
     s.authors           = ["Jensel Gatchalian"]
     s.email             = 'jensel.gatchalian@gmail.com'
-    s.files             = Dir.glob("{lib,test}/**/*")
+    s.files             = Dir.glob("lib/**/*")
     s.require_path      = 'lib'
     s.homepage          = 'https://github.com/jenselg/obfs-ruby'
     s.license           = 'MIT'
