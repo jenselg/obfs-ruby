@@ -55,11 +55,13 @@ module Text
     end
 
   private
+
     def word_letter_pairs(str)
       @word_letter_pairs[str] ||=
         str.upcase.split(/\s+/).map{ |word|
           (0 ... (word.length - 1)).map { |i| word[i, 2] }
         }.flatten.freeze
     end
+    
   end
 end
