@@ -15,6 +15,7 @@
 #
 
 module OBFS # :nodoc:
+
     module Levenshtein
     
       # Calculate the Levenshtein distance between two strings +str1+ and +str2+.
@@ -38,6 +39,7 @@ module OBFS # :nodoc:
       end
     
     private
+
       def distance_with_maximum(str1, str2, max_distance) # :nodoc:
         s = str1.encode(Encoding::UTF_8).unpack("U*")
         t = str2.encode(Encoding::UTF_8).unpack("U*")
@@ -158,5 +160,7 @@ module OBFS # :nodoc:
       end
     
       extend self
+
     end
-    end
+    
+end
