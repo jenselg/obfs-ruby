@@ -23,7 +23,7 @@ File-based, object-oriented data store for Ruby.
 - Paths are recursively created, i.e. `datastore.some.long.path.to.create = "some string"` will recursively create the folders `datastore/some/long/path/to`, and create a file called `create` containing the string value `"some string"`
 - You can also do: `datastore["some"]["long"]["path"]["to"]["create"] = "some string"`
 - You can mix and match between dot and bracket notation: `datastore.some["long"].path["to"].create`
-- Tested in Ruby 2.6.3 and 3.0.0, in Linux. Untested in Windows and MacOS.
+- Tested in Ruby >= 2.0.0, in Linux. Untested in Windows and MacOS.
 
 
 ## Special Methods
