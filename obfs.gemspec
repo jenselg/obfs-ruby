@@ -10,4 +10,5 @@ Gem::Specification.new do |s|
     s.require_path      = 'lib'
     s.homepage          = 'https://github.com/jenselg/obfs-ruby'
     s.license           = 'MIT'
+    s.required_ruby_version = '>= 2.0.0'
 end
