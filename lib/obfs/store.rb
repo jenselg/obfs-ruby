@@ -119,7 +119,7 @@ module OBFS
 
             def write(path, filename, data)
                 curr_path = File.join path, filename
-                File.write(curr_path, JSON.unparse(data))
+                File.write(curr_path, JSON.dump(data))
             end
 
             def read(path, filename)
