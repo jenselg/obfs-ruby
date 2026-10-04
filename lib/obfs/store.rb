@@ -249,7 +249,7 @@ module OBFS
 
 
         similarity =
-          OBFS::WhiteSimilarity.similarity(
+          OBFS::StringSimilarity.similarity(
             search_space_term,
             term
           )
@@ -753,8 +753,8 @@ module OBFS
     # - prefix matches
     # - substring matches
     # - token coverage
-    # - existing Levenshtein implementation
-    # - existing WhiteSimilarity implementation
+    # - OBFS Levenshtein distance
+    # - normalized bigram/Dice similarity
     #
     # No additional dependencies required.
     # ------------------------------------------------------------
@@ -859,42 +859,10 @@ module OBFS
 
 
       # ----------------------------------------------------------
-      # existing WhiteSimilarity
+      # normalized bigram/Dice similarity
       # ----------------------------------------------------------
 
-      begin
-
-        white_score =
-          OBFS::WhiteSimilarity.similarity(
-            query,
-            value
-          ).to_f
-
-
-        # support either:
-        #
-        #   0.0 - 1.0
-        #
-        # or:
-        #
-        #   0 - 100
-        #
-
-        white_score /= 100.0 if white_score > 1.0
-
-
-        white_score = 0.0 if white_score < 0.0
-        white_score = 1.0 if white_score > 1.0
-
-
-        scores << white_score
-
-
-      rescue
-
-        # Remaining scorers are sufficient.
-
-      end
+      scores << OBFS::StringSimilarity.similarity(query, value)
 
 
       scores.empty? ? 0.0 : scores.max
