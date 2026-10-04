@@ -7,9 +7,9 @@ File-based, object-oriented data store for Ruby.
 OBFS maps recursive Ruby object access directly to the filesystem, allowing data to be addressed using dot notation, bracket notation, or a combination of both.
 
 ```ruby
-datastore.users.john.preferences.theme = "dark"
+datastore.users.cat.preferences.theme = "dark"
 
-datastore["users"]["john"]["preferences"]["theme"]
+datastore["users"]["cat"]["preferences"]["theme"]
 # => "dark"
 ```
 
@@ -17,7 +17,7 @@ The resulting filesystem structure is:
 
 ```text
 users/
-└── john/
+└── cat/
     └── preferences/
         └── theme
 ```
