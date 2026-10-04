@@ -22,7 +22,7 @@ users/
         └── theme
 ```
 
-OBFS also includes filesystem discovery helpers, including direct existence checks, recursive fuzzy directory search, timestamps, and directory indexing.
+OBFS also includes filesystem discovery helpers, including direct existence checks, recursive fuzzy directory search, timestamps, and directory indexing. It uses Ruby standard libraries and independent OBFS-owned text algorithms, with no external runtime gem dependencies.
 
 
 ## Quickstart
@@ -249,7 +249,7 @@ Arguments:
 - `records` - maximum number of records to return; defaults to `1000`
 - `tolerance` - maximum Levenshtein distance; defaults to `50`
 
-Results are returned as an array of entry names sorted by relevance.
+Results are returned as an array of entry names sorted by relevance. Entries must be within the Levenshtein tolerance and have a positive normalized bigram/Dice similarity score. The distance check is case-sensitive; similarity normalizes case, path separators, and whitespace.
 
 Example:
 
@@ -389,7 +389,7 @@ Example result:
   },
   {
     path: "systems/services/nginx/certificates",
-    score: 0.9
+    score: 0.95
   }
 ]
 ```
@@ -506,13 +506,14 @@ The hierarchy itself is stored using physical directories and files, making the 
 - JSON-compatible values are serialized using Ruby's JSON library.
 - Files containing valid JSON are deserialized when read.
 - Non-JSON files are returned as raw text.
-- Fuzzy search uses OBFS's existing Levenshtein and text similarity implementations.
+- Fuzzy search uses independent `OBFS::Levenshtein` and `OBFS::StringSimilarity` implementations.
+- No external runtime gem dependencies are required; the Text gem is not needed.
 - No database server is required.
 
 
 ## Platform Support
 
-OBFS has been tested with Ruby >= 2.0.0 on Linux.
+OBFS requires Ruby >= 2.0.0. The updated text algorithms use Ruby 2.0-compatible APIs. Syntax and basic behavior were validated on Ruby 4.0.7 on Linux; this update has not been tested on Ruby 2.0 itself.
 
 Windows and macOS have not been formally tested.
 
@@ -524,9 +525,56 @@ Windows and macOS have not been formally tested.
 - [JavaScript / Node.js Version](https://github.com/jenselg/obfs)
 
 
-## Credits
+## Text Algorithms
 
-- [Text](https://github.com/threedaymonk/text) - Ruby gem containing text-processing algorithms used by OBFS.
+The algorithms are implemented locally in `lib/obfs/levenshtein.rb` and
+`lib/obfs/string_similarity.rb`. Requiring `obfs` loads both automatically.
+
+### `OBFS::Levenshtein.distance`
+
+Calculates unit-cost insertion, deletion, and substitution distance over Unicode
+codepoints. Inputs must support String encoding; Unicode normalization is not
+performed.
+
+```ruby
+OBFS::Levenshtein.distance("kitten", "sitting")
+# => 3
+
+OBFS::Levenshtein.distance("kitten", "sitting", 2)
+# => 2
+```
+
+The optional `max_distance` must be a nonnegative Integer or `nil`. When supplied,
+the result is capped at that maximum, preserving the existing API contract. A
+result equal to the maximum means the actual distance is at least that value.
+
+### `OBFS::StringSimilarity.similarity`
+
+Returns a normalized character-bigram Dice score between `0.0` and `1.0`. It
+normalizes case, path separators (`/`, `\`, `:`, `_`, and `-`), and whitespace.
+Bigrams span the normalized string, including spaces, and repeated bigrams count
+separately. Unicode codepoints are used without Unicode normalization.
+
+```ruby
+OBFS::StringSimilarity.similarity("France", "French")
+# => 0.4
+
+OBFS::StringSimilarity.similarity("nginx_config", "NGINX CONFIG")
+# => 1.0
+```
+
+Equal nonempty normalized strings score `1.0`, including one-character strings.
+Empty inputs score `0.0`; unequal one-character strings score `0.0`.
+
+Store relevance takes the highest score from exact, prefix, substring, token
+coverage, normalized Levenshtein, and Dice matching. `_find` and `_search` retain
+their signatures and result formats, but rankings can change with the new Dice
+scorer.
+
+When upgrading, replace `lib/obfs/white_similarity.rb` with
+`lib/obfs/string_similarity.rb` and update any direct `OBFS::WhiteSimilarity`
+references to `OBFS::StringSimilarity`. The copied Text implementations and
+`text/*` requires are no longer used.
 
 
 ## License
